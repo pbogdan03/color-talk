@@ -21,7 +21,7 @@ var app = express();
 // uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
-mongoose.connect('mongodb://localhost/news');
+mongoose.connect('mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
