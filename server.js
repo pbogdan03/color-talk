@@ -21,11 +21,13 @@ var app = express();
 // uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
-mongoose.connect('mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/');
+mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.set('server_port', process.env.OPENSHIFT_NODEJS_PORT || 8080);
+app.set('server_ip_address', process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -67,6 +69,10 @@ app.use(function(err, req, res, next) {
     message: err.message,
     error: {}
   });
+});
+
+app.listen(server_port, server_ip_address, function() {
+  console.log('Listening on ' + server_ip_address + ', server_port' + server_port);
 });
 
 module.exports = app;
