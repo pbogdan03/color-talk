@@ -8,7 +8,7 @@ var Talk = mongoose.model('Talk');
 var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
 
-var auth = jwt({secret: process.env.SECRET, userProperty: 'payload'});
+var auth = jwt({secret: process.env.USER_SECRET, userProperty: 'payload'});
 
 
 router.param('talk', function(req, res, next, id) {
