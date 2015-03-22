@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
 
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheets/style.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
     <script src="/javascripts/angular-ui-router.min.js"></script>
@@ -16,51 +17,98 @@
   </head>
 
   <body ng-app="colorTalk">
-    <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
-      <ul class="nav navbar-nav">
-        <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
+  <div class="page-color {{talkColor}}">
+
+    <nav class="navbar navbar-default no-borders">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand">
+            <img src="images/color-talk-01.png" alt="ColorTalk" height="40px" width="40px">
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div ng-controller="NavCtrl">
+    <nav class="nav-status navbar navbar-default pull-right {{moveNav()}}">
+      <ul class="nav text-center">
+        <li ng-show="isLoggedIn()"><span class="nav-user">{{ currentUser() }}</span></li>
         <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
         <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
         <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
       </ul>
+      <ul ng-show="isLoggedIn()" class="nav-colors">
+        <ul class="color-group">
+          <li class="red color-changer"><span class="color-click" ng-click="changeColor('red')"></span></li>
+          <li class="pink color-changer"><span class="color-click" ng-click="changeColor('pink')"></span></li>
+          <li class="purple color-changer"><span class="color-click" ng-click="changeColor('purple')"></span></li>
+          <li class="deep-purple color-changer"><span class="color-click" ng-click="changeColor('deep-purple')"></span></li>
+          <li class="indigo color-changer"><span class="color-click" ng-click="changeColor('indigo')"></span></li>
+          <li class="light-blue color-changer"><span class="color-click" ng-click="changeColor('light-blue')"></span></li>
+          <li class="cyan color-changer"><span class="color-click" ng-click="changeColor('cyan')"></span></li>
+          <li class="teal color-changer"><span class="color-click" ng-click="changeColor('teal')"></span></li>
+          <li class="green color-changer"><span class="color-click" ng-click="changeColor('green')"></span></li>
+          <li class="light-green color-changer"><span class="color-click" ng-click="changeColor('light-green')"></span></li>
+        </ul>
+        <ul class="color-group">
+          <li class="lime color-changer"><span class="color-click" ng-click="changeColor('lime')"></span></li>
+          <li class="yellow color-changer"><span class="color-click" ng-click="changeColor('yellow')"></span></li>
+          <li class="amber color-changer"><span class="color-click" ng-click="changeColor('amber')"></span></li>
+          <li class="orange color-changer"><span class="color-click" ng-click="changeColor('orange')"></span></li>
+          <li class="deep-orange color-changer"><span class="color-click" ng-click="changeColor('deep-orange')"></span></li>
+          <li class="brown color-changer"><span class="color-click" ng-click="changeColor('brown')"></span></li>
+          <li class="grey color-changer"><span class="color-click" ng-click="changeColor('grey')"></span></li>
+          <li class="blue-grey color-changer"><span class="color-click" ng-click="changeColor('blue-grey')"></span></li>
+          <li class="black color-changer"><span class="color-click" ng-click="changeColor('black')"></span></li>
+          <li class="white color-changer"><span class="color-click" ng-click="changeColor('white')"></span></li>
+        </ul>
+      </ul>
     </nav>
+    </div>
 
     <div class="row">
-      <div class="col-md-6 col-md-offset-3">
+      <div class="col-md-8 col-md-offset-2">
         
         <ui-view></ui-view>
 
       </div>
     </div>
+  </div>
     
     <script type="text/ng-template" id="/home.html">
-        <div class="page-header">
+        <div class="page-header text-center">
           <h1>Color Talk</h1>
         </div>
 
+        <div class="talk-item row" ng-repeat="talk in talks | orderBy: '-upvotes'">
 
-        <div ng-repeat="talk in talks | orderBy: '-upvotes'">
-
-          <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(talk)"></span>
-          <span class="glyphicon glyphicon-thumbs-down" ng-click="decrementUpvotes(talk)"></span>
-          {{talk.upvotes}}
-
-          <span style="font-size: 20px; margin-left: 10px;">
-            <a ng-show="talk.link" ng-href="{{talk.link}}">
-              {{talk.title}}
-            </a>
-            <span ng-hide="talk.link">
-              {{talk.title}}
+          <div class="talk-info col-md-8">
+            <span class="talk-title">
+              <a ng-show="talk.link" ng-href="{{talk.link}}">
+                {{talk.title}}
+              </a>
+              <span ng-hide="talk.link">
+                {{talk.title}}
+              </span>
+              <span ng-show="talk.author">
+                posted by <a>{{talk.author}}</a> |
+              </span>
             </span>
-            <span ng-show="talk.author">
-              posted by <a>{{talk.author}}</a> |
-            </span>
-          </span>
 
-          <span>
-            {{commentsNumber(talk)}}
-            <a href="#/talks/{{talk._id}}">Comment<span ng-hide="commentsNumber(talk) === 1">s</span></a>
-          </span>
+            <span class="talk-comments">
+              {{commentsNumber(talk)}}
+              <a href="#/talks/{{talk._id}}">Comment<span ng-hide="commentsNumber(talk) === 1">s</span></a>
+            </span>
+          </div>
+
+          <div class="col-md-4">
+            <div class="talk-voting pull-right">
+              <span class="glyphicon glyphicon-thumbs-up green" ng-click="incrementUpvotes(talk)">
+              </span><span class="glyphicon glyphicon-thumbs-down red" ng-click="decrementUpvotes(talk)"></span>
+              <span class="talk-votes text-center">{{talk.upvotes}}</span>
+            </div>
+          </div>
+
         </div>
         
         <div ng-hide="isLoggedIn()">
@@ -87,6 +135,7 @@
 
     <script type="text/ng-template" id="/talks.html">
       <div class="page-header">
+        <a href="#/home/" class="glyphicon glyphicon-chevron-left pull-left"></a>
         <h3>
           <a ng-show="talk.link" ng-href="{{talk.link}}">
             {{talk.title}}
@@ -97,13 +146,24 @@
         </h3>
       </div>
 
-      <div ng-repeat="comment in talk.comments | orderBy: '-upvotes'">
-        <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(comment)"></span>
-        <span class="glyphicon glyphicon-thumbs-down" ng-click="decrementUpvotes(comment)"></span>
-        {{comment.upvotes}} - by {{comment.author}}
-        <span style="font-size:20px; margin-left:10px">
-          {{comment.body}}
-        </span>
+      <div class="talk-item row" ng-repeat="comment in talk.comments | orderBy: '-upvotes'">
+        <div class="talk-info col-md-8">
+          <span class="talk-title">
+            {{comment.body}}
+          </span>
+
+          <span class="talk-comments">
+            - by {{comment.author}}
+          </span>
+        </div>
+
+        <div class="col-md-4">
+          <div class="talk-voting pull-right">
+            <span class="glyphicon glyphicon-thumbs-up green" ng-click="incrementUpvotes(comment)"></span>
+            <span class="glyphicon glyphicon-thumbs-down red" ng-click="decrementUpvotes(comment)"></span>
+            <span class="talk-votes text-center">{{comment.upvotes}}</span>
+          </div>
+        </div>
       </div>
 
       <div ng-hide="isLoggedIn()">

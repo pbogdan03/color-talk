@@ -1,5 +1,9 @@
 var app = angular.module('colorTalk', ['ui.router']);
 
+app.run(['$rootScope', function($rootScope){
+  $rootScope.talkColor = 'white';
+}]);
+
 app.factory('talks', ['$http', 'auth', function($http, auth){
   var o = {
     talks: []
@@ -127,7 +131,7 @@ app.factory('auth', ['$http', '$window', function($http, $window) {
   };
 
   return auth;
-}])
+}]);
 
 app.controller('MainCtrl', ['$scope', 'talks', 'auth', function($scope, talks, auth) {
   $scope.talks = talks.talks;
@@ -209,10 +213,13 @@ app.controller('AuthCtrl', ['$scope', '$state', 'auth', function($scope, $state,
   };
 }]);
 
-app.controller('NavCtrl', ['$scope', 'auth', function($scope, auth) {
+app.controller('NavCtrl', ['$scope', '$rootScope', 'auth', function($scope, $rootScope, auth) {
   $scope.isLoggedIn = auth.isLoggedIn;
   $scope.currentUser = auth.currentUser;
   $scope.logOut = auth.logOut;
+  $scope.changeColor = function(color) {
+    $rootScope.talkColor = color;
+  };
 }]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {

@@ -8,6 +8,9 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 
+// uncomment in local dev
+require('dotenv').load();
+
 require('./models/Talks');
 require('./models/Comments');
 require('./models/Users');
@@ -20,7 +23,7 @@ var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 var app = express();
 
-mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL);
+mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/test');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
