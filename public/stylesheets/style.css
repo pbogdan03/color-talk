@@ -1,6 +1,3 @@
-html {
-  height: 100%;
-}
 body {
   height: 100%;
 }
@@ -113,7 +110,6 @@ a:hover {
 }
 
 .nav-status {
-  position: fixed;
   top: 60px;
   right: 10px;
   z-index: 1000;
@@ -133,24 +129,24 @@ a:hover {
   line-height: 20px;
 }
 
-.navbar-header {
-  float: none;
-}
 .navbar-brand {
-  display: block;
-  float: none;
-  margin: 0 auto; 
+  margin-left: 20px; 
   padding: 5px;
 }
 
 .navbar-brand img{
-  display: block;
-  margin: 0 auto; 
+  margin-left: 20px;
+  display: block; 
 }
 
 .page-header {
   margin: 0 0 20px;
   border-bottom: none;
+}
+
+.color-list {
+  padding-top: 6px;
+  height: 50px;
 }
 
 .talk-voting {
