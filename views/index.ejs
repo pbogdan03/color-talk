@@ -87,7 +87,7 @@
               </a>
 
               <span class="talk-author" ng-show="talk.author">
-                posted by {{talk.author}}
+                posted by {{talk.author | capitalize}}
               </span>
             </span>
             
@@ -183,7 +183,7 @@
       <div class="talk-item row" ng-repeat="comment in talk.comments | orderBy: '-upvotes'">
         <div class="talk-info col-md-8">
           <span class="comment-author">
-            {{comment.author}} said:
+            {{comment.author | capitalize}} said:
           </span>
 
           <span class="comment-body">
