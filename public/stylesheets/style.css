@@ -691,3 +691,19 @@ input[type=radio]:checked + .blue-grey-radio:before{
   background-color: #777;
   color: #fff;
 }
+
+/* MEDIA QUERIES */
+@media screen and (max-width: 768px) {
+  body {
+    padding-top: 190px;
+  }
+  .navbar-nav {
+    margin: 0;
+  }
+  .navbar-brand {
+    float: none;
+    display: block;
+    width: 60px;
+    margin: 0 auto;
+  }
+}
