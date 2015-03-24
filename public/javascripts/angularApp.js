@@ -143,10 +143,10 @@ app.controller('MainCtrl', ['$scope', 'talks', 'auth', function($scope, talks, a
     if($scope.title && $scope.title !== '') {
       talks.create({
         title: $scope.title, 
-        link: $scope.link
+        color: $scope.color || 'grey',
+        author: currentUser
       });
       $scope.title = '';
-      $scope.link = '';
     }
   };
 

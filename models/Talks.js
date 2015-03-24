@@ -2,10 +2,11 @@ var mongoose = require('mongoose');
 
 var TalkSchema = new mongoose.Schema({
   title: String,
-  link: String,
+  author: String,
   upvotes: {type: Number, default: 0},
   voted: [{type: String, ref: 'User'}],
-  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+  color: {type: String, default: 'grey'}
 });
 
 TalkSchema.methods.upvote = function(cb) {
