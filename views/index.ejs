@@ -112,10 +112,10 @@
           <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a talk. </h3>
         </div>
 
-        <button class="btn btn-primary btn-custom" style="margin-top: 30px;" ng-click="activeForm = !activeForm">Add new talk</button>
+        <button class="btn btn-primary btn-custom" style="margin-top: 30px;" ng-show="isLoggedIn()" ng-click="activeForm = !activeForm">Add new talk</button>
 
         <div ng-hide="activeForm">
-          <form ng-submit="addTalk()" ng-show="isLoggedIn()" style="margin-top: 30px;">
+          <form ng-submit="addTalk()" style="margin-top: 30px;">
             <h3>Add a new talk</h3>
 
             <div class="form-group">
@@ -204,10 +204,10 @@
         <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can comment. </h3>
       </div>
 
-      <button class="btn btn-primary btn-custom" style="margin-top: 30px" ng-click="activeForm = !activeForm">Add new comment</button>
+      <button class="btn btn-primary btn-custom" ng-show="isLoggedIn()" style="margin-top: 30px" ng-click="activeForm = !activeForm">Add new comment</button>
 
       <div ng-hide="activeForm">
-        <form ng-submit="addComment()" ng-show="isLoggedIn()" style="margin-top:30px;">
+        <form ng-submit="addComment()" style="margin-top:30px;">
           <h3>Add a new comment</h3>
 
           <div class="form-group">
