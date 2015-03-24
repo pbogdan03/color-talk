@@ -91,6 +91,11 @@ h1 {
   border: solid 2px #777;
   color: #fff;
 }
+.btn-custom:focus {
+  background-color: #777;
+  border: solid 2px #777;
+  color: #fff;
+}
 .navbar-custom {
   padding-right: 20px;
 }
