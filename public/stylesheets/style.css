@@ -687,4 +687,7 @@ input[type=radio]:checked + .blue-grey-radio:before{
   background-color: #777;
   color: #fff;
 }
-
+.glyphicon-chevron-left:focus {
+  background-color: #777;
+  color: #fff;
+}
