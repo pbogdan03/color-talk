@@ -1,6 +1,7 @@
 # Color Talk
 Simple post and comment app
 See it here on OpenShift : http://colortalk-pbogdan.rhcloud.com/
+
 Made with MEAN stack :
 * NodeJS - backend
 * Express - routing etc
