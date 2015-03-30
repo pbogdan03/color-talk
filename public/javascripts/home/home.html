@@ -1,0 +1,91 @@
+<div class="page-header text-center">
+  <h1>Color Talk</h1>
+</div>
+
+<div class="talk-item row {{talk.color}}" ng-repeat="talk in talks | orderBy: '-upvotes'">
+
+  <div class="talk-info col-xs-6">
+    <span class="talk-title">
+      <a class="talk-link" href="#/talks/{{talk._id}}">
+        {{talk.title}} |
+      </a>
+
+      <span class="talk-author" ng-show="talk.author">
+        posted by {{talk.author | capitalize}}
+      </span>
+    </span>
+    
+
+    <span class="talk-comments">
+      {{commentsNumber(talk)}}
+      Comment<span ng-hide="commentsNumber(talk) === 1">s</span>
+    </span>
+  </div>
+
+  <div class="col-xs-6">
+    <div class="talk-voting pull-right">
+      <a href="" class="glyphicon glyphicon-thumbs-up green" ng-click="incrementUpvotes(talk)">
+      </a><a href="" class="glyphicon glyphicon-thumbs-down red" ng-click="decrementUpvotes(talk)"></a>
+      <span class="talk-votes text-center">{{talk.upvotes}}</span>
+    </div>
+  </div>
+
+</div>
+
+<div ng-hide="isLoggedIn()">
+  <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a talk. </h3>
+</div>
+
+<button class="btn btn-primary btn-custom" style="margin-top: 30px;" ng-show="isLoggedIn()" ng-click="activeForm = !activeForm">Add new talk</button>
+
+<div ng-hide="activeForm">
+  <form ng-submit="addTalk()" style="margin-top: 30px;">
+    <h3>Add a new talk</h3>
+
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Title" ng-model="title"></input>
+    </div>
+    <div class="form-group task-colors">
+       <input class="radio-inline" id="red-radio" type="radio" name="color" value="red" ng-model="color">
+       <label class="red-radio" for="red-radio"></label> 
+       <input class="radio-inline" id="pink-radio" type="radio" name="color" value="pink" ng-model="color">
+       <label class="pink-radio" for="pink-radio"></label> 
+       <input class="radio-inline" id="purple-radio" type="radio" name="color" value="purple" ng-model="color">
+       <label class="purple-radio" for="purple-radio"></label> 
+       <input class="radio-inline" id="deep-purple-radio" type="radio" name="color" value="deep-purple" ng-model="color">
+       <label class="deep-purple-radio" for="deep-purple-radio"></label> 
+       <input class="radio-inline" id="indigo-radio" type="radio" name="color" value="indigo" ng-model="color">
+       <label class="indigo-radio" for="indigo-radio"></label> 
+       <input class="radio-inline" id="blue-radio" type="radio" name="color" value="blue" ng-model="color">
+       <label class="blue-radio" for="blue-radio"></label> 
+       <input class="radio-inline" id="light-blue-radio" type="radio" name="color" value="light-blue" ng-model="color">
+       <label class="light-blue-radio" for="light-blue-radio"></label> 
+       <input class="radio-inline" id="cyan-radio" type="radio" name="color" value="cyan" ng-model="color">
+       <label class="cyan-radio" for="cyan-radio"></label> 
+       <input class="radio-inline" id="teal-radio" type="radio" name="color" value="teal" ng-model="color">
+       <label class="teal-radio" for="teal-radio"></label> 
+       <input class="radio-inline" id="green-radio" type="radio" name="color" value="green" ng-model="color">
+       <label class="green-radio" for="green-radio"></label> 
+       <input class="radio-inline" id="light-green-radio" type="radio" name="color" value="light-green" ng-model="color">
+       <label class="light-green-radio" for="light-green-radio"></label> 
+       <input class="radio-inline" id="lime-radio" type="radio" name="color" value="lime" ng-model="color">
+       <label class="lime-radio" for="lime-radio"></label> 
+       <input class="radio-inline" id="yellow-radio" type="radio" name="color" value="yellow" ng-model="color">
+       <label class="yellow-radio" for="yellow-radio"></label> 
+       <input class="radio-inline" id="amber-radio" type="radio" name="color" value="amber" ng-model="color">
+       <label class="amber-radio" for="amber-radio"></label> 
+       <input class="radio-inline" id="orange-radio" type="radio" name="color" value="orange" ng-model="color">
+       <label class="orange-radio" for="orange-radio"></label> 
+       <input class="radio-inline" id="deep-orange-radio" type="radio" name="color" value="deep-orange" ng-model="color">
+       <label class="deep-orange-radio" for="deep-orange-radio"></label> 
+       <input class="radio-inline" id="brown-radio" type="radio" name="color" value="brown" ng-model="color">
+       <label class="brown-radio" for="brown-radio"></label> 
+       <input class="radio-inline" id="grey-radio" type="radio" name="color" value="grey" ng-model="color">
+       <label class="grey-radio" for="grey-radio"></label> 
+       <input class="radio-inline" id="blue-grey-radio" type="radio" name="color" value="blue-grey" ng-model="color">
+       <label class="blue-grey-radio" for="blue-grey-radio"></label> 
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-custom">Post</button>
+  </form>
+</div>
