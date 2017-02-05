@@ -19,7 +19,6 @@ require('./config/passport');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var server_port = process.env.PORT || 8080;
-var server_ip_address = process.env.HOST || '127.0.0.1';
 
 var app = express();
 var MONGO_URL = process.env.MONGO_USER
@@ -78,8 +77,15 @@ app.use(function(err, req, res, next) {
   });
 });
 
-app.listen(server_port, server_ip_address, function() {
-  console.log('Listening on ' + server_ip_address + ', server_port' + server_port);
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(server_port, '127.0.0.1', function() {
+    console.log('Listening on 127.0.0.1, server_port ' + server_port);
+  });
+} else {
+  app.listen(server_port, function() {
+    console.log('Started on production, server_port ' + server_port);
+  });
+}
+
 
 module.exports = app;
