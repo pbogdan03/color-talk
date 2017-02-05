@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 
-// uncomment in local dev
+// in local dev
 // require('dotenv').load();
 
 require('./models/Talks');
