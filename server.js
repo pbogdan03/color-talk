@@ -9,7 +9,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 
 // uncomment in local dev
-// require('dotenv').load();
+require('dotenv').load();
 
 require('./models/Talks');
 require('./models/Comments');
@@ -25,6 +25,8 @@ var app = express();
 var MONGO_URL = process.env.MONGO_USER
                 ? 'mongodb://' + process.env.MONGO_USER + ':' + process.env.MONGO_PASS + '@' + process.env.MONGO_URL
                 : 'mongodb://localhost/test';
+
+console.log(MONGO_URL);
 
 mongoose.connect(MONGO_URL);
 
