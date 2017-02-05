@@ -2,8 +2,6 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var jwt = require('express-jwt');
-var fs = require('fs');
-var cors = require('cors');
 
 var mongoose = require('mongoose');
 var Talk = mongoose.model('Talk');
@@ -11,10 +9,6 @@ var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
 
 var auth = jwt({secret: process.env.USER_SECRET, userProperty: 'payload'});
-
-var Data = require('./massageData');
-var TIMER_DATA_FILE = path.join(__dirname, 'timer-data.json');
-var VOTING_DATA_FILE = path.join(__dirname, 'voting-data.json');
 
 router.param('talk', function(req, res, next, id) {
   var query = Talk.findById(id);
@@ -197,109 +191,6 @@ router.post('/login', function(req, res, next) {
       return res.status(401).json(info);
     }
   })(req, res, next);
-});
-
-/* GET show timers */
-router.get('/api/timers', (req, res) => {
-  fs.readFile(TIMER_DATA_FILE, (err, data) => {
-    res.json(JSON.parse(data));
-  });
-});
-
-/* POST create timer */
-router.post('/api/timers', (req, res) => {
-  fs.readFile(TIMER_DATA_FILE, (err, data) => {
-    const timers = JSON.parse(data);
-    const newTimer = {
-      title: req.body.title,
-      project: req.body.project,
-      id: req.body.id,
-      elapsed: 0,
-      runningSince: null,
-    };
-    timers.push(newTimer);
-    fs.writeFile(TIMER_DATA_FILE, JSON.stringify(timers, null, 4), () => {
-      res.json(timers);
-    });
-  });
-});
-
-/* POST start timer */
-router.post('/api/timers/start', (req, res) => {
-  fs.readFile(TIMER_DATA_FILE, (err, data) => {
-    const timers = JSON.parse(data);
-    timers.forEach((timer) => {
-      if (timer.id === req.body.id) {
-        timer.runningSince = req.body.start;
-      }
-    });
-    fs.writeFile(TIMER_DATA_FILE, JSON.stringify(timers, null, 4), () => {
-      res.json({});
-      res.end();
-    });
-  });
-});
-
-/* POST stop timer */
-router.post('/api/timers/stop', (req, res) => {
-  fs.readFile(TIMER_DATA_FILE, (err, data) => {
-    const timers = JSON.parse(data);
-    timers.forEach((timer) => {
-      if (timer.id === req.body.id) {
-        const delta = req.body.stop - timer.runningSince;
-        timer.elapsed += delta;
-        timer.runningSince = null;
-      }
-    });
-    fs.writeFile(TIMER_DATA_FILE, JSON.stringify(timers, null, 4), () => {
-      res.json({});
-      res.end();
-    });
-  });
-});
-
-/* PUT update timer */
-router.put('/api/timers', (req, res) => {
-  fs.readFile(TIMER_DATA_FILE, (err, data) => {
-    const timers = JSON.parse(data);
-    timers.forEach((timer) => {
-      if (timer.id === req.body.id) {
-        timer.title = req.body.title;
-        timer.project = req.body.project;
-      }
-    });
-    fs.writeFile(TIMER_DATA_FILE, JSON.stringify(timers, null, 4), () => {
-      res.json({});
-      res.end();
-    });
-  });
-});
-
-/* DELETE timer */
-router.delete('/api/timers', (req, res) => {
-  fs.readFile(TIMER_DATA_FILE, (err, data) => {
-    let timers = JSON.parse(data);
-    timers = timers.reduce((memo, timer) => {
-      if (timer.id === req.body.id) {
-        return memo;
-      } else {
-        return memo.concat(timer);
-      }
-    }, []);
-    fs.writeFile(TIMER_DATA_FILE, JSON.stringify(timers, null, 4), () => {
-      res.json({});
-      res.end();
-    });
-  });
-});
-
-/* GET votes */
-router.get('/api/voting', (req, res) => {
-  Data.renewVotingData(() => {
-    fs.readFile(VOTING_DATA_FILE, (err, data) => {
-      res.json(JSON.parse(data));
-    });
-  });
 });
 
 module.exports = router;

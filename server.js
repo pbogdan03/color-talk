@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var cors = require('cors');
 
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -28,17 +27,6 @@ var MONGO_URL = process.env.MONGO_USER
                 : 'mongodb://localhost/test';
 
 mongoose.connect(MONGO_URL);
-
-const whitelist = ['https://bogdanp.gitlab.io', 'http://localhost:3000', 'http://192.168.0.101:3000'];
-const corsOptions = {
-  origin: function (origin, callback) {
-    var originIsWhitelisted = whitelist.indexOf(origin) !== -1
-    callback(originIsWhitelisted ? null : 'Bad Request', originIsWhitelisted)
-  },
-  optionsSuccessStatus: 200
-}
-app.use(cors(corsOptions));
-app.options('*', cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
