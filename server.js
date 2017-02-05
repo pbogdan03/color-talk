@@ -9,7 +9,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 
 // in local dev
-require('dotenv').load();
+// require('dotenv').load();
 
 require('./models/Talks');
 require('./models/Comments');
