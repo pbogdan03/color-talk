@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -18,12 +19,26 @@ require('./config/passport');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var server_port = process.env.PORT || 8080;
+var server_ip_address = process.env.HOST || '127.0.0.1';
 
 var app = express();
+var MONGO_URL = process.env.MONGO_DB_USER
+                ? 'mongodb://' + process.env.MONGO_DB_USER + ':' + process.env.MONGO_DB_PASS + '@' + process.env.MONGO_DB_URL
+                : 'mongodb://localhost/test';
 
-mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/test');
+mongoose.connect(MONGO_URL);
+
+const whitelist = ['https://bogdanp.gitlab.io', 'http://localhost:3000', 'http://192.168.0.101:3000'];
+const corsOptions = {
+  origin: function (origin, callback) {
+    var originIsWhitelisted = whitelist.indexOf(origin) !== -1
+    callback(originIsWhitelisted ? null : 'Bad Request', originIsWhitelisted)
+  },
+  optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions));
+app.options('*', cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
